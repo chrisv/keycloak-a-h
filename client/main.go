@@ -18,7 +18,7 @@ type Token struct {
 	Scope            string `json:"scope"`
 }
 
-func getToken(endpoint, clientID, clientSecret, audience string) (token Token, err error) {
+func createToken(endpoint, clientID, clientSecret, audience string) (token Token, err error) {
 	resp, err := http.PostForm(endpoint, url.Values{
 		"grant_type":    {"client_credentials"},
 		"client_id":     {clientID},
@@ -43,8 +43,8 @@ func main() {
 	clientID := "file-api-sync"
 	clientSecret := "ILyFLUdPtWSyl8jOZx8AIRKw5XjmJyGy"
 
-	// Get the token.
-	token, err := getToken(endpoint, clientID, clientSecret, "file-api")
+	// Create a new token using Keycloak.
+	token, err := createToken(endpoint, clientID, clientSecret, "file-api")
 	if err != nil {
 		log.Fatalf("failed to get token: %v", err)
 	}
